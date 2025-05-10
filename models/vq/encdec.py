@@ -54,7 +54,7 @@ class Decoder(nn.Module):
             out_dim = width
             block = nn.Sequential(
                 Resnet1D(width, depth, dilation_growth_rate, reverse_dilation=True, activation=activation, norm=norm),
-                nn.Upsample(scale_factor=2, mode='nearest'),
+                nn.Upsample(scale_factor=stride_t, mode='nearest'),
                 nn.Conv1d(width, out_dim, 3, 1, 1)
             )
             blocks.append(block)
