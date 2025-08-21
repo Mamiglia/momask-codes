@@ -1,17 +1,17 @@
-import visualization.Animation as Animation
+from .Animation import Animation
 
-from visualization.InverseKinematics import BasicInverseKinematics, BasicJacobianIK, InverseKinematics
-from visualization.Quaternions import Quaternions
-import visualization.BVH_mod as BVH
-from visualization.remove_fs import *
+from .InverseKinematics import BasicInverseKinematics, BasicJacobianIK, InverseKinematics
+from .Quaternions import Quaternions
+from . import BVH_mod as BVH
+from .remove_fs import *
 
-from utils.plot_script import plot_3d_motion
-from utils import paramUtil
-from common.skeleton import Skeleton
+from ..utils.plot_script import plot_3d_motion
+from ..utils import paramUtil
+from ..common.skeleton import Skeleton
 import torch
 
 from torch import nn
-from visualization.utils.quat import ik_rot, between, fk, ik
+from .utils.quat import ik_rot, between, fk, ik
 from tqdm import tqdm
 
 
@@ -28,7 +28,7 @@ def get_grot(glb, parent, offset):
 
 class Joint2BVHConvertor:
     def __init__(self):
-        self.template = BVH.load('./visualization/data/template.bvh', need_quater=True)
+        self.template = BVH.load(os.path.dirname(__file__)+'/data/template.bvh', need_quater=True)
         self.re_order = [0, 1, 4, 7, 10, 2, 5, 8, 11, 3, 6, 9, 12, 15, 13, 16, 18, 20, 14, 17, 19, 21]
 
         self.re_order_inv = [0, 1, 5, 9, 2, 6, 10, 3, 7, 11, 4, 8, 12, 14, 18, 13, 15, 19, 16, 20, 17, 21]

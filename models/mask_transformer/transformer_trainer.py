@@ -4,10 +4,10 @@ import torch.optim as optim
 # import tensorflow as tf
 from torch.utils.tensorboard import SummaryWriter
 from collections import OrderedDict
-from utils.utils import *
+from ...utils.utils import *
 from os.path import join as pjoin
-from utils.eval_t2m import evaluation_mask_transformer, evaluation_res_transformer
-from models.mask_transformer.tools import *
+from ...utils.eval_t2m import evaluation_mask_transformer, evaluation_res_transformer
+from .tools import *
 
 from einops import rearrange, repeat
 

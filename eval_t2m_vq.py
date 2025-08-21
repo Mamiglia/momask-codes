@@ -3,16 +3,16 @@ import os
 from os.path import join as pjoin
 
 import torch
-from models.vq.model import RVQVAE
-from options.vq_option import arg_parse
-from motion_loaders.dataset_motion_loader import get_dataset_motion_loader
+from .models.vq.model import RVQVAE
+from .options.vq_option import arg_parse
+from .motion_loaders.dataset_motion_loader import get_dataset_motion_loader
 import utils.eval_t2m as eval_t2m
-from utils.get_opt import get_opt
-from models.t2m_eval_wrapper import EvaluatorModelWrapper
+from .utils.get_opt import get_opt
+from .models.t2m_eval_wrapper import EvaluatorModelWrapper
 import warnings
 warnings.filterwarnings('ignore')
 import numpy as np
-from utils.word_vectorizer import WordVectorizer
+from .utils.word_vectorizer import WordVectorizer
 
 def load_vq_model(vq_opt, which_epoch):
     # opt_path = pjoin(opt.checkpoints_dir, opt.dataset_name, opt.vq_name, 'opt.txt')

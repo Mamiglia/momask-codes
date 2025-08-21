@@ -1,8 +1,6 @@
-import random
-
 import torch.nn as nn
-from models.vq.encdec import Encoder, Decoder
-from models.vq.residual_vq import ResidualVQ
+from .encdec import Encoder, Decoder
+from .residual_vq import ResidualVQ
     
 class RVQVAE(nn.Module):
     def __init__(self,

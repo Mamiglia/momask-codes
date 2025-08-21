@@ -1,7 +1,7 @@
 import re
 import numpy as np
-from common.quaternion import *
-from visualization.Animation import Animation
+from ..common.quaternion import *
+from .Animation import Animation
 
 channelmap = {
     'Xrotation': 'x',

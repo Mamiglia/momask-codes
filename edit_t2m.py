@@ -4,19 +4,19 @@ from os.path import join as pjoin
 import torch
 import torch.nn.functional as F
 
-from models.mask_transformer.transformer import MaskTransformer, ResidualTransformer
-from models.vq.model import RVQVAE, LengthEstimator
+from .models.mask_transformer.transformer import MaskTransformer, ResidualTransformer
+from .models.vq.model import RVQVAE, LengthEstimator
 
-from options.eval_option import EvalT2MOptions
-from utils.get_opt import get_opt
+from .options.eval_option import EvalT2MOptions
+from .utils.get_opt import get_opt
 
-from utils.fixseed import fixseed
-from visualization.joints2bvh import Joint2BVHConvertor
+from .utils.fixseed import fixseed
+from .visualization.joints2bvh import Joint2BVHConvertor
 
-from utils.motion_process import recover_from_ric
-from utils.plot_script import plot_3d_motion
+from .utils.motion_process import recover_from_ric
+from .utils.plot_script import plot_3d_motion
 
-from utils.paramUtil import t2m_kinematic_chain
+from .utils.paramUtil import t2m_kinematic_chain
 
 import numpy as np
 

@@ -5,21 +5,21 @@ import numpy as np
 from torch.utils.data import DataLoader
 from os.path import join as pjoin
 
-from models.mask_transformer.transformer import ResidualTransformer
-from models.mask_transformer.transformer_trainer import ResidualTransformerTrainer
-from models.vq.model import RVQVAE
+from .models.mask_transformer.transformer import ResidualTransformer
+from .models.mask_transformer.transformer_trainer import ResidualTransformerTrainer
+from .models.vq.model import RVQVAE
 
-from options.train_option import TrainT2MOptions
+from .options.train_option import TrainT2MOptions
 
-from utils.plot_script import plot_3d_motion
-from utils.motion_process import recover_from_ric
-from utils.get_opt import get_opt
-from utils.fixseed import fixseed
-from utils.paramUtil import t2m_kinematic_chain, kit_kinematic_chain
+from .utils.plot_script import plot_3d_motion
+from .utils.motion_process import recover_from_ric
+from .utils.get_opt import get_opt
+from .utils.fixseed import fixseed
+from .utils.paramUtil import t2m_kinematic_chain, kit_kinematic_chain
 
-from data.t2m_dataset import Text2MotionDataset
-from motion_loaders.dataset_motion_loader import get_dataset_motion_loader
-from models.t2m_eval_wrapper import EvaluatorModelWrapper
+from .data.t2m_dataset import Text2MotionDataset
+from .motion_loaders.dataset_motion_loader import get_dataset_motion_loader
+from .models.t2m_eval_wrapper import EvaluatorModelWrapper
 
 
 def plot_t2m(data, save_dir, captions, m_lengths):

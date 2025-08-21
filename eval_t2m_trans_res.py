@@ -3,16 +3,16 @@ from os.path import join as pjoin
 
 import torch
 
-from models.mask_transformer.transformer import MaskTransformer, ResidualTransformer
-from models.vq.model import RVQVAE
+from .models.mask_transformer.transformer import MaskTransformer, ResidualTransformer
+from .models.vq.model import RVQVAE
 
-from options.eval_option import EvalT2MOptions
-from utils.get_opt import get_opt
-from motion_loaders.dataset_motion_loader import get_dataset_motion_loader
-from models.t2m_eval_wrapper import EvaluatorModelWrapper
+from .options.eval_option import EvalT2MOptions
+from .utils.get_opt import get_opt
+from .motion_loaders.dataset_motion_loader import get_dataset_motion_loader
+from .models.t2m_eval_wrapper import EvaluatorModelWrapper
 
-import utils.eval_t2m as eval_t2m
-from utils.fixseed import fixseed
+from .utils import eval_t2m
+from .utils.fixseed import fixseed
 
 import numpy as np
 

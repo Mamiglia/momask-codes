@@ -4,7 +4,7 @@ import argparse
 import pickle
 import smplx
 
-from utils import bvh, quat
+from ..utils import bvh, quat
 
 
 def parse_args():

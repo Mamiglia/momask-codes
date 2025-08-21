@@ -1,4 +1,4 @@
-from options.base_option import BaseOptions
+from .base_option import BaseOptions
 import argparse
 
 class TrainT2MOptions(BaseOptions):

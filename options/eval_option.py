@@ -1,4 +1,4 @@
-from options.base_option import BaseOptions
+from .base_option import BaseOptions
 
 class EvalT2MOptions(BaseOptions):
     def initialize(self):

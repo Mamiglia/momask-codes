@@ -4,10 +4,10 @@ import clip
 import numpy as np
 import torch
 # from scipy import linalg
-from utils.metrics import *
+from .metrics import *
 import torch.nn.functional as F
 # import visualization.plot_3d_global as plot_3d
-from utils.motion_process import recover_from_ric
+from .motion_process import recover_from_ric
 #
 #
 # def tensorborad_add_video_xyz(writer, xyz, nb_iter, tag, nb_vis=4, title_batch=None, outname=None):

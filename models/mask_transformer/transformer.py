@@ -11,7 +11,7 @@ from tqdm.auto import tqdm
 from typing import Callable, Optional, List, Dict
 from copy import deepcopy
 from functools import partial
-from models.mask_transformer.tools import *
+from .tools import *
 from torch.distributions.categorical import Categorical
 
 class InputProcess(nn.Module):
