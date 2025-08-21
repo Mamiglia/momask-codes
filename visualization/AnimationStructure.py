@@ -1,6 +1,6 @@
 import numpy as np
 # import scipy.sparse as sparse
-from .Animation import Animation
+from . import Animation
 
 
 """ Family Functions """

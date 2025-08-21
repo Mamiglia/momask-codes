@@ -1,4 +1,4 @@
-from .Animation import Animation
+from . import Animation
 
 from .InverseKinematics import BasicInverseKinematics, BasicJacobianIK, InverseKinematics
 from .Quaternions import Quaternions
