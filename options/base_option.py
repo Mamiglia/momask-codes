@@ -8,12 +8,12 @@ class BaseOptions():
         self.initialized = False
 
     def initialize(self):
-        self.parser.add_argument('--name', type=str, default="t2m_nlayer8_nhead6_ld384_ff1024_cdp0.1_rvq6ns", help='Name of this trial')
+        self.parser.add_argument('--name', type=str, default="mtrans", help='Name of this trial')
 
-        self.parser.add_argument('--vq_name', type=str, default="rvq_nq1_dc512_nc512", help='Name of the rvq model.')
+        self.parser.add_argument('--vq_name', type=str, default="rvq", help='Name of the VQ model.')
 
-        self.parser.add_argument("--gpu_id", type=int, default=-1, help='GPU id')
-        self.parser.add_argument('--dataset_name', type=str, default='t2m', help='Dataset Name, {t2m} for humanml3d, {kit} for kit-ml')
+        self.parser.add_argument("--gpu_id", type=int, default=0, help='GPU id')
+        self.parser.add_argument('--dataset_name', type=str, default='HumanML3D', help='Dataset Name, humanml3d, kit-ml or Motion-X')
         self.parser.add_argument('--checkpoints_dir', type=str, default='./checkpoints', help='models are saved here.')
 
         self.parser.add_argument('--latent_dim', type=int, default=384, help='Dimension of transformer latent.')

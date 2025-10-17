@@ -9,7 +9,7 @@ class EvalT2MOptions(BaseOptions):
         self.parser.add_argument('--ext', type=str, default='text2motion', help='Extension of the result file or folder')
         self.parser.add_argument("--num_batch", default=2, type=int,
                                  help="Number of batch for generation")
-        self.parser.add_argument("--repeat_times", default=1, type=int,
+        self.parser.add_argument("--repeat_times", default=20, type=int,
                                  help="Number of repetitions, per sample text prompt")
         self.parser.add_argument("--cond_scale", default=4, type=float,
                                  help="For classifier-free sampling - specifies the s parameter, as defined in the paper.")
@@ -17,7 +17,7 @@ class EvalT2MOptions(BaseOptions):
                                  help="Sampling Temperature.")
         self.parser.add_argument("--topkr", default=0.9, type=float,
                                  help="Filter out percentil low prop entries.")
-        self.parser.add_argument("--time_steps", default=18, type=int,
+        self.parser.add_argument("--time_steps", default=10, type=int,
                                  help="Mask Generate steps.")
         self.parser.add_argument("--seed", default=10107, type=int)
 
@@ -25,7 +25,7 @@ class EvalT2MOptions(BaseOptions):
         self.parser.add_argument('--use_res_model', action="store_true", help='Whether to use residual transformer.')
         # self.parser.add_argument('--est_length', action="store_true", help='Training iterations')
 
-        self.parser.add_argument('--res_name', type=str, default='tres_nlayer8_ld384_ff1024_rvq6ns_cdp0.2_sw', help='Model name of residual transformer')
+        self.parser.add_argument('--res_name', type=str, default='rtrans', help='Model name of residual transformer')
         self.parser.add_argument('--text_path', type=str, default="", help='Text prompt file')
 
 

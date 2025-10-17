@@ -5,6 +5,7 @@ import numpy as np
 from tqdm import tqdm
 from torch.utils.data._utils.collate import default_collate
 import random
+import os
 import codecs as cs
 
 
@@ -94,10 +95,12 @@ class Text2MotionDatasetEval(data.Dataset):
         self.max_length = 20
         self.pointer = 0
         self.max_motion_length = opt.max_motion_length
-        min_motion_len = 40 if self.opt.dataset_name =='t2m' else 24
+        self.return_names = False
+        min_motion_len = 40 if self.opt.dataset_name =='HumanML3D' else 24
 
         data_dict = {}
         id_list = []
+        assert os.path.exists(split_file), f"Split file {split_file} does not exist"
         with cs.open(split_file, 'r') as f:
             for line in f.readlines():
                 id_list.append(line.strip())
@@ -110,10 +113,9 @@ class Text2MotionDatasetEval(data.Dataset):
                 motion = np.load(pjoin(opt.motion_dir, name + '.npy'))
                 if (len(motion)) < min_motion_len or (len(motion) >= 200):
                     continue
-                text_data = []
-                flag = False
+
                 with cs.open(pjoin(opt.text_dir, name + '.txt')) as f:
-                    for line in f.readlines():
+                    for l, line in enumerate(f.readlines()):
                         text_dict = {}
                         line_split = line.strip().split('#')
                         caption = line_split[0]
@@ -125,35 +127,21 @@ class Text2MotionDatasetEval(data.Dataset):
 
                         text_dict['caption'] = caption
                         text_dict['tokens'] = tokens
-                        if f_tag == 0.0 and to_tag == 0.0:
-                            flag = True
-                            text_data.append(text_dict)
-                        else:
-                            try:
-                                n_motion = motion[int(f_tag*20) : int(to_tag*20)]
-                                if (len(n_motion)) < min_motion_len or (len(n_motion) >= 200):
-                                    continue
-                                new_name = random.choice('ABCDEFGHIJKLMNOPQRSTUVW') + '_' + name
-                                while new_name in data_dict:
-                                    new_name = random.choice('ABCDEFGHIJKLMNOPQRSTUVW') + '_' + name
-                                data_dict[new_name] = {'motion': n_motion,
-                                                       'length': len(n_motion),
-                                                       'text':[text_dict]}
-                                new_name_list.append(new_name)
-                                length_list.append(len(n_motion))
-                            except:
-                                print(line_split)
-                                print(line_split[2], line_split[3], f_tag, to_tag, name)
-                                # break
+                
+                        start = int(f_tag*20) if f_tag > 0 else 0
+                        end = int(to_tag*20) if to_tag > 0 else len(motion)
+                        n_motion = motion[start : end]
+                        if len(n_motion) < min_motion_len or (len(n_motion) >= 200):
+                            continue
+                        new_name = f"{l}%{name}"
+                        data_dict[new_name] = {'motion': n_motion,
+                                            'length': len(n_motion),
+                                            'text':[text_dict]}
+                        new_name_list.append(new_name)
+                        length_list.append(len(n_motion))
 
-                if flag:
-                    data_dict[name] = {'motion': motion,
-                                       'length': len(motion),
-                                       'text': text_data}
-                    new_name_list.append(name)
-                    length_list.append(len(motion))
-            except:
-                pass
+            except Exception as e:
+                print(f"Error processing {name}: {e}")
 
         name_list, length_list = zip(*sorted(zip(new_name_list, length_list), key=lambda x: x[1]))
 
@@ -212,8 +200,8 @@ class Text2MotionDatasetEval(data.Dataset):
             m_length = (m_length // self.opt.unit_length - 1) * self.opt.unit_length
         elif coin2 == 'single':
             m_length = (m_length // self.opt.unit_length) * self.opt.unit_length
-        idx = random.randint(0, len(motion) - m_length)
-        motion = motion[idx:idx+m_length]
+        start = random.randint(0, len(motion) - m_length)
+        motion = motion[start:start+m_length]
 
         "Z Normalization"
         motion = (motion - self.mean) / self.std
@@ -224,6 +212,8 @@ class Text2MotionDatasetEval(data.Dataset):
                                      ], axis=0)
         # print(word_embeddings.shape, motion.shape)
         # print(tokens)
+        if self.return_names:
+            return word_embeddings, pos_one_hots, caption, sent_len, motion, m_length, '_'.join(tokens), self.name_list[idx]
         return word_embeddings, pos_one_hots, caption, sent_len, motion, m_length, '_'.join(tokens)
 
 
