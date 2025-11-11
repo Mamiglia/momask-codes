@@ -23,6 +23,16 @@ from .utils.plot_script import plot_3d_motion
 from .utils.paramUtil import t2m_kinematic_chain
 
 import numpy as np
+
+def get_model_loaders(model_name):
+    if model_name == "bamm":
+        from src.bamm.models.loaders import load_res_model, load_trans_model, load_vq_model
+        print("Using BAMM models")
+    else:
+        from src.momask_codes.models.loaders import load_res_model, load_trans_model, load_vq_model
+        print("Using Momask models")
+    return load_res_model, load_trans_model, load_vq_model
+
 clip_version = 'ViT-B/32'
 
 def add_viz_args(parser):
@@ -30,6 +40,7 @@ def add_viz_args(parser):
     parser.add_argument('--skip_viz', action='store_true', help='Skip visualization')
     parser.add_argument('--ik_viz', action='store_true', help='Use IK for visualization')
     parser.add_argument('--run_name', type=str, default='t2m_gen', help='Name of the run for wandb logging')
+    parser.add_argument('--model_name', type=str, default='momask', help='name of the model to use')
 
 
 if __name__ == '__main__':
@@ -37,6 +48,8 @@ if __name__ == '__main__':
     add_viz_args(parser.parser)
     opt = parser.parse()
     fixseed(opt.seed)
+
+    load_res_model, load_trans_model, load_vq_model = get_model_loaders(opt.model_name)
     
     wandb.init(
         resume='allow'
@@ -155,7 +168,7 @@ if __name__ == '__main__':
     for r in range(opt.repeat_times):
         print("-->Repeat %d"%r)
         with torch.no_grad():
-            mids = t2m_transformer.generate(captions, token_lens,
+            mids, _ = t2m_transformer.generate(captions, token_lens,
                                             timesteps=opt.time_steps,
                                             cond_scale=opt.cond_scale,
                                             temperature=opt.temperature,
