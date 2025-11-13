@@ -24,14 +24,7 @@ from .utils.paramUtil import t2m_kinematic_chain
 
 import numpy as np
 
-def get_model_loaders(model_name):
-    if model_name == "bamm":
-        from src.bamm.models.loaders import load_res_model, load_trans_model, load_vq_model
-        print("Using BAMM models")
-    else:
-        from src.momask_codes.models.loaders import load_res_model, load_trans_model, load_vq_model
-        print("Using Momask models")
-    return load_res_model, load_trans_model, load_vq_model
+from src.eval.t2m_unlearn import get_model_loaders
 
 clip_version = 'ViT-B/32'
 
@@ -49,7 +42,7 @@ if __name__ == '__main__':
     opt = parser.parse()
     fixseed(opt.seed)
 
-    load_res_model, load_trans_model, load_vq_model = get_model_loaders(opt.model_name)
+    load_res_model, load_trans_model, load_vq_model = get_model_loaders(opt.name)
     
     wandb.init(
         resume='allow'
