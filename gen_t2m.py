@@ -161,12 +161,13 @@ if __name__ == '__main__':
     for r in range(opt.repeat_times):
         print("-->Repeat %d"%r)
         with torch.no_grad():
-            mids, _ = t2m_transformer.generate(captions, token_lens,
+            mids = t2m_transformer.generate(captions, token_lens,
                                             timesteps=opt.time_steps,
                                             cond_scale=opt.cond_scale,
                                             temperature=opt.temperature,
                                             topk_filter_thres=opt.topkr,
                                             gsample=opt.gumbel_sample)
+            mids = mids[0] if isinstance(mids, tuple) else mids
             # print(mids)
             # print(mids.shape)
             mids = res_model.generate(mids, captions, token_lens, temperature=1, cond_scale=5)
